@@ -1,0 +1,158 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <h3>Real QR - Enquiry Form</h3>
+    </mat-card-header>
+    <mat-card-subtitle>
+      <p style="padding: 0 0 0 20px">
+        Please fill in the following details to submit your enquiry
+      </p>
+    </mat-card-subtitle>
+  </mat-card>
+  <div style="margin: 20px 0"></div>
+  <!-- PERSONAL INFORMATION CARD -->
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <h4>Personal Information</h4>
+    </mat-card-header>
+    <div style="margin: 10px 0"></div>
+    <mat-card-content>
+      <div class="container-sm">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Number</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>E-Mail</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Mode of Contact</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let method of contactMethods"
+                  [value]="method"
+                >
+                  {{ method }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <!-- PROPERTY INFORMATION CARD -->
+  <div style="margin: 20px 0"></div>
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <h4>Property Information</h4>
+    </mat-card-header>
+    <div style="margin: 10px 0"></div>
+    <mat-card-content>
+      <div class="container-sm">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Budget Range (INR)</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let budget of budgetRange" [value]="budget">
+                  {{ budget }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Preferred Areas</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let area of preferredAreas" [value]="area">
+                  {{ area }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Property Type</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let type of propertyType" [value]="type">
+                  {{ type }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Mode of Payment</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let mode of modeOfPayment" [value]="mode">
+                  {{ mode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Time Frame</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let time of purchaseTimeFrames"
+                  [value]="time"
+                >
+                  {{ time }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline" style="width: 80%">
+              <mat-label>Any Other Questions?</mat-label>
+              <textarea matInput></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-checkbox fornControlName="consentToCall">
+              By checking, I hereby provide consent to call on the provided
+              phone number.
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div style="margin: 10px 0"></div>
+      <div class="container-sm text-center">
+        <div class="row">
+          <div class="col">
+            <button mat-stroked-button style="color: black">
+              Submit Enquiry
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

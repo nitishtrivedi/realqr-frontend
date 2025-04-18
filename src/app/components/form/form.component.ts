@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { NgFor } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-form',
@@ -17,6 +19,7 @@ import { NgFor } from '@angular/common';
     MatCheckboxModule,
     MatButtonModule,
     NgFor,
+    ReactiveFormsModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css',
@@ -62,6 +65,54 @@ export class FormComponent implements OnInit {
     'More than 12 Months',
   ];
 
-  constructor() {}
+  enquiryForm: FormGroup;
+
+  formSubmitted = false;
+  formSubmitting = false;
+  submitSuccess = false;
+  submitError = false;
+
+  constructor(private fb: FormBuilder, private enquiryService: FormService) {
+    this.enquiryForm = this.fb.group({
+      // Personal Information
+      firstName: [''],
+      lastName: [''],
+      contactNumber: [''],
+      email: [''],
+      methodOfContact: [''],
+
+      // Property Information
+      budgetRange: [''],
+      preferredAreas: [''],
+      propertyType: [''],
+      modeOfPayment: [''],
+      purchaseTimeFrame: [''],
+      otherQuestions: [''],
+      consentToCall: [false],
+    });
+  }
   ngOnInit(): void {}
+
+  onSubmit() {
+    if (this.enquiryForm.invalid) {
+      return;
+    }
+
+    this.formSubmitting = true;
+    this.submitSuccess = false;
+    this.submitError = false;
+
+    this.enquiryService.addEnquiry(this.enquiryForm.value).subscribe({
+      next: (response) => {
+        this.formSubmitting = false;
+        this.submitSuccess = true;
+        this.enquiryForm.reset();
+      },
+      error: (error) => {
+        this.formSubmitting = false;
+        this.submitSuccess = false;
+        console.error(`Error Submitting Form ${error}`);
+      },
+    });
+  }
 }

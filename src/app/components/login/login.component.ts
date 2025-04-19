@@ -76,7 +76,7 @@ export class LoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.authService.newLogin(this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.value).subscribe({
       next: () => {
         this.isLoading = false;
         this.router.navigate(['/dashboard']);

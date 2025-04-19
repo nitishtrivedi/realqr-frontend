@@ -8,6 +8,7 @@
     <a [routerLink]="routerLinkHeader">Real QR</a>
   </p>
   <div *ngIf="isAuthenticated">
+    <button mat-button *ngIf="isUserAdmin">Admin Page</button>
     <button mat-button (click)="logout()">Logout</button>
   </div>
 </div>

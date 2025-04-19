@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/UserModel';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   routerLinkHeader: string = '';
   isMainForm: boolean = false;
-  private authSubscription: Subscription | undefined;
+  private authSubscription: Subscription[] = [];
   /**
    *
    */
@@ -33,26 +33,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.auth.checkAuthStatus();
-    this.authSubscription = this.auth.isAuthenticated$.subscribe((isAuth) => {
-      this.isAuthenticated = isAuth;
-      this.routerLinkHeader = isAuth ? '/dashboard' : '';
-      if (isAuth) {
-        const token = sessionStorage.getItem('userToken');
-        if (token) {
-          const userId = this.auth.getUserIdFromToken(token);
-          if (userId) {
-            this.getUserById(userId);
-          } else {
-            this.userFullname = '';
-            this.user = undefined;
+    this.authSubscription.push(
+      combineLatest([
+        this.auth.isAuthenticated$,
+        this.auth.userRole$,
+      ]).subscribe(([isAuth, role]) => {
+        this.isAuthenticated = isAuth;
+        this.isUserAdmin = role === 'Admin' ? true : false;
+        this.routerLinkHeader = isAuth ? '/dashboard' : '';
+        if (isAuth) {
+          const token = sessionStorage.getItem('userToken');
+          if (token) {
+            const userId = this.auth.getUserIdFromToken(token);
+            if (userId) {
+              this.getUserById(userId);
+            } else {
+              this.userFullname = '';
+              this.user = undefined;
+            }
           }
+        } else {
+          this.userFullname = '';
+          this.user = undefined;
         }
-      } else {
-        this.userFullname = '';
-        this.user = undefined;
-      }
-    });
+      })
+    );
+
     this.checkIfMainForm();
     this.router.events.subscribe(() => {
       this.checkIfMainForm();
@@ -60,9 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
-    }
+    this.authSubscription.forEach((sub) => sub.unsubscribe());
   }
 
   private checkIfMainForm() {

@@ -17,12 +17,17 @@ export class AuthenticationService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(
     this.isAuthenticated()
   );
+  private userRoleSubject = new BehaviorSubject<string | null>(
+    this.getStoredUserRole()
+  );
+
   isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedSubject.asObservable();
+  userRole$: Observable<string | null> = this.userRoleSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  newLogin(credentials: Authentication): Observable<any> {
+  login(credentials: Authentication): Observable<any> {
     return this.http.post<any>(`${this.apiurl}/login`, credentials).pipe(
       tap((response) => {
         if (response.token) {
@@ -30,6 +35,7 @@ export class AuthenticationService {
           sessionStorage.setItem('userToken', response.token);
           const userRole = this.getUserRoleFromToken(response.token);
           sessionStorage.setItem('userRole', userRole);
+          this.userRoleSubject.next(userRole);
         }
       }),
       catchError(this.handleError)
@@ -40,6 +46,7 @@ export class AuthenticationService {
     sessionStorage.removeItem('userToken');
     sessionStorage.removeItem('userRole');
     this.isAuthenticatedSubject.next(false);
+    this.userRoleSubject.next(null);
     this.router.navigate(['/login']);
   }
 
@@ -85,8 +92,8 @@ export class AuthenticationService {
     }
   }
 
-  private handleError(error: HttpErrorResponse) {
-    return throwError(() => error);
+  isAuthenticated(): boolean {
+    return !!sessionStorage.getItem('userToken');
   }
 
   getUserIdFromToken(token: string): string | null {
@@ -116,8 +123,12 @@ export class AuthenticationService {
       return '';
     }
   }
+  private handleError(error: HttpErrorResponse) {
+    return throwError(() => error);
+  }
 
-  isAuthenticated(): boolean {
-    return !!sessionStorage.getItem('userToken');
+  private getStoredUserRole(): string | null {
+    const userRole = sessionStorage.getItem('userRole');
+    return userRole ?? null;
   }
 }

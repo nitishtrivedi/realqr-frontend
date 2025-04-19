@@ -4,5 +4,10 @@
   class="header-img"
 /> -->
 <div class="header-div">
-  <p class="header-text">Real QR</p>
+  <p class="header-text">
+    <a [routerLink]="routerLinkHeader">Real QR</a>
+  </p>
+  <div *ngIf="isAuthenticated">
+    <button mat-button (click)="logout()">Logout</button>
+  </div>
 </div>

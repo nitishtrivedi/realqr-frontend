@@ -12,19 +12,24 @@ export interface Authentication {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private apiurl = 'https://localhost:5000/api/user';
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private apiurl = 'https://localhost:5000/api/auth';
+
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(
+    this.isAuthenticated()
+  );
+  isAuthenticated$: Observable<boolean> =
+    this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   newLogin(credentials: Authentication): Observable<any> {
     return this.http.post<any>(`${this.apiurl}/login`, credentials).pipe(
       tap((response) => {
-        console.log(response.token);
         if (response.token) {
-          this.isLoggedInSubject.next(true);
+          this.isAuthenticatedSubject.next(true);
           sessionStorage.setItem('userToken', response.token);
+          const userRole = this.getUserRoleFromToken(response.token);
+          sessionStorage.setItem('userRole', userRole);
         }
       }),
       catchError(this.handleError)
@@ -33,17 +38,19 @@ export class AuthenticationService {
 
   logout(): void {
     sessionStorage.removeItem('userToken');
-    this.isLoggedInSubject.next(false);
+    sessionStorage.removeItem('userRole');
+    this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/login']);
   }
 
   checkAuthStatus(): void {
     const token = sessionStorage.getItem('userToken');
     if (token && this.isTokenValid(token)) {
-      this.isLoggedInSubject.next(true);
+      this.isAuthenticatedSubject.next(true);
     } else {
-      this.isLoggedInSubject.next(false);
+      this.isAuthenticatedSubject.next(false);
       sessionStorage.removeItem('userToken');
+      sessionStorage.removeItem('userRole');
       this.router.navigate(['/login']);
     }
   }
@@ -65,7 +72,7 @@ export class AuthenticationService {
     }
   }
 
-  private decodeToken(token: string): any {
+  decodeToken(token: string): any {
     try {
       // JWT is base64-encoded; split into header, payload, and signature
       const payloadBase64 = token.split('.')[1];
@@ -80,6 +87,34 @@ export class AuthenticationService {
 
   private handleError(error: HttpErrorResponse) {
     return throwError(() => error);
+  }
+
+  getUserIdFromToken(token: string): string | null {
+    try {
+      const payload = this.decodeToken(token);
+      return (
+        payload?.[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
+        ] || null
+      );
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+  private getUserRoleFromToken(token: string): string {
+    try {
+      const payload = this.decodeToken(token);
+      return (
+        payload?.[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+        ] || ''
+      );
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return '';
+    }
   }
 
   isAuthenticated(): boolean {

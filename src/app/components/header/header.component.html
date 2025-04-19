@@ -1,9 +1,4 @@
-<!-- <img
-  src="assets/images/realqr-header-2.jpg"
-  alt="realQR Logo"
-  class="header-img"
-/> -->
-<div class="header-div">
+<div [className]="isAuthenticated ? 'header-div' : 'header-div-nologin'">
   <p class="header-text">
     <a [routerLink]="routerLinkHeader">Real QR</a>
   </p>

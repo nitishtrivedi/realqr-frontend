@@ -2,12 +2,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #bdcfec;
+  border-radius: 5px;
+}
+.header-div-nologin {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background-color: #bdcfec;
+  border-radius: 5px;
 }
 
 .header-text {
-  margin: 10px 0;
+  margin: 10px 15px;
   font-family: "Boldonse", system-ui;
   font-weight: 400;
   font-style: normal;
   font-size: 24px;
+}
+.header-text a {
+  text-decoration: none !important;
+  color: black;
 }

@@ -37,14 +37,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       combineLatest([
         this.auth.isAuthenticated$,
         this.auth.userRole$,
-      ]).subscribe(([isAuth, role]) => {
+        this.auth.userId$,
+      ]).subscribe(([isAuth, role, uid]) => {
         this.isAuthenticated = isAuth;
         this.isUserAdmin = role === 'Admin' ? true : false;
         this.routerLinkHeader = isAuth ? '/dashboard' : '';
         if (isAuth) {
           const token = sessionStorage.getItem('userToken');
           if (token) {
-            const userId = this.auth.getUserIdFromToken(token);
+            const userId = uid;
             if (userId) {
               this.getUserById(userId);
             } else {
@@ -74,9 +75,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isMainForm = this.router.url === '';
   }
 
-  private getUserById(userId: string) {
-    const numUID: number = parseInt(userId);
-    this.userService.getUser(numUID).subscribe({
+  private getUserById(userId: number) {
+    this.userService.getUser(userId).subscribe({
       next: (data) => {
         this.user = data;
         this.userFullname = `${data.firstName} ${data.lastName}`;

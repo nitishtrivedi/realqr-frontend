@@ -20,10 +20,14 @@ export class AuthenticationService {
   private userRoleSubject = new BehaviorSubject<string | null>(
     this.getStoredUserRole()
   );
+  private userIdSubject = new BehaviorSubject<number | null>(
+    this.getStoredUserId()
+  );
 
   isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedSubject.asObservable();
   userRole$: Observable<string | null> = this.userRoleSubject.asObservable();
+  userId$: Observable<number | null> = this.userIdSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -36,6 +40,9 @@ export class AuthenticationService {
           const userRole = this.getUserRoleFromToken(response.token);
           sessionStorage.setItem('userRole', userRole);
           this.userRoleSubject.next(userRole);
+          const userId = parseInt(this.getUserIdFromToken(response.token));
+          sessionStorage.setItem('userId', userId.toString());
+          this.userIdSubject.next(userId);
         }
       }),
       catchError(this.handleError)
@@ -45,8 +52,10 @@ export class AuthenticationService {
   logout(): void {
     sessionStorage.removeItem('userToken');
     sessionStorage.removeItem('userRole');
+    sessionStorage.removeItem('userId');
     this.isAuthenticatedSubject.next(false);
     this.userRoleSubject.next(null);
+    this.userIdSubject.next(null);
     this.router.navigate(['/login']);
   }
 
@@ -96,17 +105,17 @@ export class AuthenticationService {
     return !!sessionStorage.getItem('userToken');
   }
 
-  getUserIdFromToken(token: string): string | null {
+  getUserIdFromToken(token: string): string {
     try {
       const payload = this.decodeToken(token);
       return (
         payload?.[
           'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
-        ] || null
+        ] || ''
       );
     } catch (error) {
       console.error('Error decoding token:', error);
-      return null;
+      return '';
     }
   }
 
@@ -130,5 +139,10 @@ export class AuthenticationService {
   private getStoredUserRole(): string | null {
     const userRole = sessionStorage.getItem('userRole');
     return userRole ?? null;
+  }
+
+  private getStoredUserId(): number | null {
+    const userId = sessionStorage.getItem('userId');
+    return userId ? parseInt(userId) : null;
   }
 }

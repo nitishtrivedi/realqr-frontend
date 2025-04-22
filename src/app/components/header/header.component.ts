@@ -70,6 +70,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSubscription.forEach((sub) => sub.unsubscribe());
   }
 
+  redirectAdmin() {
+    this.router.navigate(['/admin']);
+  }
+
   private checkIfMainForm() {
     // Adjust the route path to match your main form route (e.g., '/form', '/enquiry')
     this.isMainForm = this.router.url === '';

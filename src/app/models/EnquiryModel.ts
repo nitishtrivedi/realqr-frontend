@@ -1,3 +1,5 @@
+import { EnquiryQuestionnaire } from './EnquiryQuestionnaireModel';
+
 export interface Enquiry {
   id: number;
 
@@ -17,4 +19,5 @@ export interface Enquiry {
   purchaseType: string; // Flat, bungalow, etc.
   otherQuestions: string;
   consentToCall: boolean;
+  enquiryQuestionnaire: EnquiryQuestionnaire;
 }

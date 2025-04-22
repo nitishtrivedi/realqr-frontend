@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormService } from '../../services/form.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
@@ -103,14 +104,26 @@ export class FormComponent implements OnInit {
     this.submitError = false;
 
     this.enquiryService.addEnquiry(this.enquiryForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this.formSubmitting = false;
         this.submitSuccess = true;
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your enquiry has been submitted successfully!',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
         this.enquiryForm.reset();
       },
       error: (error) => {
         this.formSubmitting = false;
         this.submitSuccess = false;
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Your enquiry could not be submitted!',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
         console.error(`Error Submitting Form ${error}`);
       },
     });

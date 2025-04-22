@@ -1,0 +1,18 @@
+.header-div {
+  margin: 15px 0;
+}
+.mat-button-div {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.contact-details-tbl {
+  width: 90%;
+  margin: auto;
+}
+.contact-details-tbl td {
+  padding: 5px;
+}
+.customer-info-div {
+  margin: 10px 0 35px 0;
+}

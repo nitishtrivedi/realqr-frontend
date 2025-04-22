@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -19,10 +20,20 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/UserModel';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatTableModule, MatButtonModule, MatPaginator, MatPaginatorModule],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatPaginator,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatIconModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,7 +42,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   enquiriesData: Enquiry[] = [];
   dataSource = new MatTableDataSource<Enquiry>(this.enquiriesData);
-  displayedColumns: string[] = ['name', 'propertyType', 'actions'];
+  displayedColumns: string[] = [
+    'count',
+    'name',
+    'propertyType',
+    'methodOfContact',
+    'contactInfo',
+    'enqStatus',
+    'actions',
+  ];
   user: User | undefined;
   userid: number | undefined;
   private userSub: Subscription | undefined;
@@ -41,7 +60,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private enquiryService: FormService,
     private userService: UserService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +82,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.enquiriesData = data;
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
+        this.cdr.markForCheck();
       },
     });
   }
   viewEnquiry(id: number) {
-    console.log(id);
+    this.router.navigate(['/manage-enquiry', id]);
   }
 
   getUserDetails() {
@@ -74,10 +96,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.userService.getUser(id).subscribe({
           next: (data) => {
             this.user = data;
+            this.cdr.markForCheck();
           },
         });
       } else {
         this.user = undefined;
+        this.cdr.markForCheck();
       }
     });
   }

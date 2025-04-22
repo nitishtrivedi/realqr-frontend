@@ -1,3 +1,17 @@
 .intro-div {
-  margin: 5px 0;
+  margin: 10px 0;
+}
+
+.enq-table th {
+  background-color: #d1def3;
+}
+.enq-table th:not(:first-child) {
+  text-align: center;
+}
+.enq-table td:not(:first-child) {
+  text-align: center;
+}
+
+.enq-status-open {
+  background-color: #00ff00 !important;
 }

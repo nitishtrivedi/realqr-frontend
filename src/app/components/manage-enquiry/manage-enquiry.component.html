@@ -1,0 +1,103 @@
+<a routerLink="/dashboard" style="text-decoration: none; color: black"
+  ><= Back to Dashboard</a
+>
+
+<div class="header-div">
+  <h4>Enquiry Details</h4>
+</div>
+
+<div class="mat-button-div">
+  <button mat-button (click)="accordion().openAll()">Expand All</button>
+  <button mat-button (click)="accordion().closeAll()">Collapse All</button>
+</div>
+<div class="accordion-div mt-3">
+  <mat-accordion multi="true">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><h5>Customer Details</h5> </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <!-- CONTENT GOES HERE -->
+      <div class="customer-info-div">
+        <h5><b>Customer Information</b></h5>
+        <hr />
+        <div class="container mb-3 mt-3">
+          <div class="row mb-3">
+            <div class="col">
+              <b>Name: </b>
+              {{ enquiry?.firstName }} {{ enquiry?.lastName }}
+            </div>
+            <div class="col">
+              <b>Contact: </b>
+
+              {{
+                enquiry?.consentToCall ? enquiry?.contactNumber : enquiry?.email
+              }}
+            </div>
+            <div class="col">
+              <b>Preferred Method of Contact: </b>
+              {{ enquiry?.methodOfContact }}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <b>Consent to Call: </b>
+              {{ enquiry?.consentToCall ? "Yes" : "No" }}
+            </div>
+            <div class="col-8">
+              <b>Other questions asked by the customer: </b>
+              {{ enquiry?.otherQuestions }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="property-info-div">
+        <h5><b>Property Information</b></h5>
+        <hr />
+        <div class="container mt-3 mb-3">
+          <div class="row mb-3">
+            <div class="col">
+              <b>Preferred Property Type: </b> {{ enquiry?.propertyType }}
+            </div>
+            <div class="col">
+              <b>Preferred Areas: </b> {{ enquiry?.preferredAreas }}
+            </div>
+            <div class="col">
+              <b>Purchase Timeframe: </b> {{ enquiry?.purchaseTimeFrame }}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <b>Customer Budget Range: </b> {{ enquiry?.budgetRange }}
+            </div>
+            <div class="col">
+              <b>Mode of Payment: </b> {{ enquiry?.modeOfPayment }}
+            </div>
+            <div class="col"></div>
+          </div>
+        </div>
+      </div>
+      <!-- CONTENT GOES HERE -->
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title><h5>Enquiry Questionnaire</h5></mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <!-- CONTENT GOES HERE -->
+      <div class="container mt-3 mb-3">
+        <div class="row mb-3">
+          <div class="col">
+            <b>Enquiry Status: </b>
+            {{ enquiry?.enquiryQuestionnaire?.enquiryStatus }}
+          </div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+      </div>
+      <!-- CONTENT GOES HERE -->
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

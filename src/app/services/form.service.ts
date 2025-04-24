@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Enquiry } from '../models/EnquiryModel';
 import { AuthenticationService } from './authentication.service';
+import { EnquiryQuestionnaire } from '../models/EnquiryQuestionnaireModel';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +61,19 @@ export class FormService {
       .delete<{ message: string }>(`${this.apiURL}/${id}`, {
         headers: this.getAuthHeaders(),
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  updateQuestionnaire(
+    id: number,
+    enquiryQuestionnaire: EnquiryQuestionnaire
+  ): Observable<{ message: string }> {
+    return this.http
+      .put<{ message: string }>(
+        `${this.apiURL}/${id}/questionnaire`,
+        enquiryQuestionnaire,
+        { headers: this.getAuthHeaders() }
+      )
       .pipe(catchError(this.handleError));
   }
 

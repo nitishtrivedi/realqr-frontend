@@ -13,5 +13,11 @@
 }
 
 .enq-status-open {
+  background-color: #8ba1f1 !important;
+}
+.enq-status-completed {
   background-color: #00ff00 !important;
+}
+.enq-status-inprogress {
+  background-color: yellow !important;
 }

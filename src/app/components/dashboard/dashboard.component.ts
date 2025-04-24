@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   user: User | undefined;
   userid: number | undefined;
   private userSub: Subscription | undefined;
+  enqStatusCssArray: string[] = [];
   /**
    *
    */
@@ -82,12 +84,46 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.enquiriesData = data;
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
+
         this.cdr.markForCheck();
       },
     });
   }
   viewEnquiry(id: number) {
     this.router.navigate(['/manage-enquiry', id]);
+  }
+
+  deleteEnquiry(id: number) {
+    Swal.fire({
+      title: 'Are you sure you want to delete this enquiry?',
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+      confirmButtonColor: 'red',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.enquiryService.deleteEnquiry(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Success!',
+              text: 'The selected enquiry was deleted successfully!',
+              icon: 'success',
+              confirmButtonText: 'Ok',
+            });
+            this.loadEnquiries();
+          },
+          error: (error) => {
+            console.error(error);
+            Swal.fire({
+              title: 'Oops!',
+              text: 'The selected enquiry could not be deleted!',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          },
+        });
+      }
+    });
   }
 
   getUserDetails() {
@@ -104,5 +140,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  loadClassName(status: string): string {
+    if (status == 'Open') {
+      return 'enq-status-open';
+    } else if (status == 'Completed') {
+      return 'enq-status-completed';
+    } else if (status == 'In Progress') {
+      return 'enq-status-inprogress';
+    } else {
+      return '';
+    }
   }
 }

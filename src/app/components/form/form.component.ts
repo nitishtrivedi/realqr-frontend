@@ -105,6 +105,7 @@ export class FormComponent implements OnInit {
 
     this.enquiryService.addEnquiry(this.enquiryForm.value).subscribe({
       next: () => {
+        console.log(this.enquiryForm.value);
         this.formSubmitting = false;
         this.submitSuccess = true;
         Swal.fire({

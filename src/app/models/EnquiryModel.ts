@@ -1,4 +1,5 @@
 import { EnquiryQuestionnaire } from './EnquiryQuestionnaireModel';
+import { User } from './UserModel';
 
 export interface Enquiry {
   id: number;
@@ -19,5 +20,7 @@ export interface Enquiry {
   purchaseType: string; // Flat, bungalow, etc.
   otherQuestions: string;
   consentToCall: boolean;
+  userId: number;
+  user: User;
   enquiryQuestionnaire: EnquiryQuestionnaire;
 }

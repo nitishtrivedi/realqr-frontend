@@ -1,3 +1,5 @@
+import { Enquiry } from './EnquiryModel';
+
 export interface User {
   id: number;
   username: string;
@@ -6,4 +8,5 @@ export interface User {
   passwordHash: string;
   email: string;
   isUserAdmin: boolean;
+  enquiries: Enquiry[];
 }

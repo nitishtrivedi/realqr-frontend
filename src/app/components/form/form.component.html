@@ -1,164 +1,140 @@
 <div class="form-container">
-  <mat-card appearance="outlined">
+  <mat-card class="intro-card mat-elevation-z4">
     <mat-card-header>
-      <h3>Real QR - Enquiry Form</h3>
+      <mat-card-title><b>Real QR - Enquiry Form</b></mat-card-title>
     </mat-card-header>
-    <mat-card-subtitle>
-      <p style="padding: 0 0 0 20px">
-        Please fill in the following details to submit your enquiry
+    <mat-card-content>
+      <p class="intro-text">
+        Please fill in the following details carefully to submit your enquiry
       </p>
-    </mat-card-subtitle>
+    </mat-card-content>
   </mat-card>
-  <div style="margin: 20px 0"></div>
-  <form [formGroup]="enquiryForm" (ngSubmit)="onSubmit()">
-    <!-- PERSONAL INFORMATION CARD -->
-    <mat-card appearance="outlined">
+
+  <form [formGroup]="enquiryForm" (ngSubmit)="onSubmit()" class="main-form">
+    <!-- Personal Information Section -->
+    <mat-card class="section-card mat-elevation-z4">
       <mat-card-header>
-        <h4>Personal Information</h4>
+        <mat-card-title>Personal Information</mat-card-title>
       </mat-card-header>
-      <div style="margin: 10px 0"></div>
+      <mat-divider></mat-divider>
       <mat-card-content>
-        <div class="container-sm">
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input matInput formControlName="firstName" />
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input matInput formControlName="lastName" />
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Contact Number</mat-label>
-                <input matInput formControlName="contactNumber" />
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>E-Mail</mat-label>
-                <input matInput formControlName="email" />
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Mode of Contact</mat-label>
-                <mat-select formControlName="methodOfContact">
-                  <mat-option
-                    *ngFor="let method of contactMethods"
-                    [value]="method"
-                  >
-                    {{ method }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
+        <div class="form-grid">
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Contact Number</mat-label>
+            <input matInput formControlName="contactNumber" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Preferred Mode of Contact</mat-label>
+            <mat-select formControlName="methodOfContact">
+              <mat-option
+                *ngFor="let method of contactMethods"
+                [value]="method"
+              >
+                {{ method }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </mat-card-content>
     </mat-card>
-    <!-- PROPERTY INFORMATION CARD -->
-    <div style="margin: 20px 0"></div>
-    <mat-card appearance="outlined">
+
+    <!-- Property Information Section -->
+    <mat-card class="section-card mat-elevation-z4">
       <mat-card-header>
-        <h4>Property Information</h4>
+        <mat-card-title>Property Information</mat-card-title>
       </mat-card-header>
-      <div style="margin: 10px 0"></div>
+      <mat-divider></mat-divider>
       <mat-card-content>
-        <div class="container-sm">
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Budget Range (INR)</mat-label>
-                <mat-select formControlName="budgetRange">
-                  <mat-option
-                    *ngFor="let budget of budgetRange"
-                    [value]="budget"
-                  >
-                    {{ budget }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Preferred Areas</mat-label>
-                <mat-select formControlName="preferredAreas">
-                  <mat-option
-                    *ngFor="let area of preferredAreas"
-                    [value]="area"
-                  >
-                    {{ area }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Property Type</mat-label>
-                <mat-select formControlName="propertyType">
-                  <mat-option *ngFor="let type of propertyType" [value]="type">
-                    {{ type }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Mode of Payment</mat-label>
-                <mat-select formControlName="modeOfPayment">
-                  <mat-option *ngFor="let mode of modeOfPayment" [value]="mode">
-                    {{ mode }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <mat-label>Buying Period</mat-label>
-                <mat-select formControlName="purchaseTimeFrame">
-                  <mat-option
-                    *ngFor="let time of purchaseTimeFrames"
-                    [value]="time"
-                  >
-                    {{ time }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline" style="width: 80%">
-                <mat-label>Any Other Questions?</mat-label>
-                <textarea matInput formControlName="otherQuestions"></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-checkbox formControlName="consentToCall">
-                By checking, I hereby provide consent to call on the provided
-                phone number.
-              </mat-checkbox>
-            </div>
+        <div class="form-grid">
+          <mat-form-field appearance="fill">
+            <mat-label>Budget Range (INR)</mat-label>
+            <mat-select formControlName="budgetRange">
+              <mat-option *ngFor="let budget of budgetRange" [value]="budget">
+                {{ budget }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Preferred Areas</mat-label>
+            <mat-select formControlName="preferredAreas">
+              <mat-option *ngFor="let area of preferredAreas" [value]="area">
+                {{ area }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Property Type</mat-label>
+            <mat-select formControlName="propertyType">
+              <mat-option *ngFor="let type of propertyType" [value]="type">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Mode of Payment</mat-label>
+            <mat-select formControlName="modeOfPayment">
+              <mat-option *ngFor="let mode of modeOfPayment" [value]="mode">
+                {{ mode }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Buying Period</mat-label>
+            <mat-select formControlName="purchaseTimeFrame">
+              <mat-option
+                *ngFor="let time of purchaseTimeFrames"
+                [value]="time"
+              >
+                {{ time }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Any Other Questions?</mat-label>
+            <textarea
+              matInput
+              formControlName="otherQuestions"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
+
+          <div class="checkbox-field full-width">
+            <mat-checkbox formControlName="consentToCall">
+              I consent to receive a call on my provided number.
+            </mat-checkbox>
           </div>
         </div>
-        <div style="margin: 10px 0"></div>
-        <div class="container-sm text-center">
-          <div class="row">
-            <div class="col">
-              <button mat-stroked-button style="color: black">
-                Submit Enquiry
-              </button>
-            </div>
-          </div>
+
+        <div class="form-actions">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="isSubmitting"
+          >
+            {{ isSubmitting ? "Submitting..." : "Submit Enquiry" }}
+          </button>
         </div>
       </mat-card-content>
     </mat-card>

@@ -9,6 +9,7 @@ import { NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormService } from '../../services/form.service';
 import Swal from 'sweetalert2';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-form',
@@ -21,6 +22,7 @@ import Swal from 'sweetalert2';
     MatButtonModule,
     NgFor,
     ReactiveFormsModule,
+    MatDividerModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css',
@@ -72,6 +74,7 @@ export class FormComponent implements OnInit {
   formSubmitting = false;
   submitSuccess = false;
   submitError = false;
+  isSubmitting: boolean = false;
 
   constructor(private fb: FormBuilder, private enquiryService: FormService) {
     this.enquiryForm = this.fb.group({

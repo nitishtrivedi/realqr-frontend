@@ -11,7 +11,7 @@
     </p>
   </div>
 </div>
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="enquiriesData.length > 0">
   <table mat-table [dataSource]="dataSource" class="enq-table">
     <ng-container matColumnDef="count">
       <th mat-header-cell *matHeaderCellDef><b>Sr No.</b></th>
@@ -88,6 +88,7 @@
             mat-fab
             style="width: 40px; height: 40px"
             (click)="deleteEnquiry(enquiry.id)"
+            *ngIf="isUserAdmin"
           >
             <mat-icon style="color: red">delete_forever</mat-icon>
           </button>
@@ -105,4 +106,10 @@
     aria-label="Select page"
   >
   </mat-paginator>
+</div>
+
+<div class="mat-elevation-z8 no-enq-div" *ngIf="enquiriesData.length == 0">
+  <p>Looks like there are no enquiries assigned to you.</p>
+
+  <span>Contact your administrator to assign tasks.</span>
 </div>

@@ -1,0 +1,25 @@
+/* Copy same add-user styles */
+.header-div {
+  margin: 10px;
+}
+.add-user-card {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.submit-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

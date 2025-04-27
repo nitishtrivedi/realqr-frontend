@@ -4,3 +4,23 @@
 .content-div {
   margin: 15px 0;
 }
+
+.user-table th {
+  background-color: #d1def3;
+}
+.user-table th:not(:first-child) {
+  text-align: center;
+}
+.user-table td:not(:first-child) {
+  text-align: center;
+}
+
+.enq-status-open {
+  background-color: #8ba1f1 !important;
+}
+.enq-status-completed {
+  background-color: #00ff00 !important;
+}
+.enq-status-inprogress {
+  background-color: yellow !important;
+}

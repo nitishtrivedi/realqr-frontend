@@ -1,0 +1,102 @@
+<mat-card *ngIf="editEnquiryForm" class="edit-enquiry-card">
+  <mat-accordion multi>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Edit Enquiry</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form [formGroup]="editEnquiryForm">
+        <!-- Personal Information Section -->
+        <div class="section-title">Personal Information</div>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contact Number</mat-label>
+            <input matInput formControlName="contactNumber" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Method of Contact</mat-label>
+            <input matInput formControlName="methodOfContact" />
+          </mat-form-field>
+        </div>
+
+        <!-- Property Preferences Section -->
+        <div class="section-title">Property Preferences</div>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Budget Range</mat-label>
+            <input matInput formControlName="budgetRange" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Preferred Areas</mat-label>
+            <input matInput formControlName="preferredAreas" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Property Type</mat-label>
+            <input matInput formControlName="propertyType" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mode of Payment</mat-label>
+            <input matInput formControlName="modeOfPayment" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Purchase Time Frame</mat-label>
+            <input matInput formControlName="purchaseTimeFrame" />
+          </mat-form-field>
+        </div>
+
+        <!-- Assignment Section -->
+        <div class="section-title">Assignment</div>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Assign to Agent</mat-label>
+            <mat-select formControlName="userId">
+              <mat-option [value]="null">
+                <div class="option-content">
+                  <div class="option-main">Unassigned</div>
+                </div>
+              </mat-option>
+              <mat-option *ngFor="let user of users" [value]="user.id">
+                <div class="option-content">
+                  <div class="option-main-badge">
+                    <span>{{ user.firstName }} {{ user.lastName }}</span>
+                    <span class="badge"
+                      >Active Assignments:
+                      {{ user.enquiries.length || 0 }}</span
+                    >
+                  </div>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Save Button -->
+        <div class="button-group">
+          <button mat-raised-button color="primary" (click)="save()">
+            Save
+          </button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>

@@ -21,3 +21,15 @@
 .enq-status-inprogress {
   background-color: yellow !important;
 }
+
+.no-enq-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 30px 0;
+}
+.no-enq-div p {
+  font-size: 22px;
+  font-weight: bold;
+  color: red;
+}

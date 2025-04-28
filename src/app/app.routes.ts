@@ -5,6 +5,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { ManageEnquiryComponent } from './components/manage-enquiry/manage-enquiry.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AdminGuard } from './admin.guard';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { EditEnquiryComponent } from './components/edit-enquiry/edit-enquiry.component';
 
 export const routes: Routes = [
   { path: '', component: FormComponent },
@@ -26,6 +30,21 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'admin/add-user',
+    component: AddUserComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'admin/edit-user/:id',
+    component: EditUserComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'admin/edit-enquiry/:id',
+    component: EditEnquiryComponent,
+    canActivate: [AuthGuard, AdminGuard],
   },
 ];

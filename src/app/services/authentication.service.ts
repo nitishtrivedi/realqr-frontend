@@ -105,6 +105,11 @@ export class AuthenticationService {
     return !!sessionStorage.getItem('userToken');
   }
 
+  isUserAdmin(): boolean {
+    var role = sessionStorage.getItem('userRole');
+    return role === 'Admin' ? true : false;
+  }
+
   getUserIdFromToken(token: string): string {
     try {
       const payload = this.decodeToken(token);

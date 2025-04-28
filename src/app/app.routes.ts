@@ -9,6 +9,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AdminGuard } from './admin.guard';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { EditEnquiryComponent } from './components/edit-enquiry/edit-enquiry.component';
+import { ManageProfileComponent } from './components/manage-profile/manage-profile.component';
 
 export const routes: Routes = [
   { path: '', component: FormComponent },
@@ -27,6 +28,12 @@ export const routes: Routes = [
     component: ManageEnquiryComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'manage-profile/:id',
+    component: ManageProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  // ADMIN ROUTES
   {
     path: 'admin',
     component: AdminComponent,

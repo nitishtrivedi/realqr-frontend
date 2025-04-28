@@ -63,7 +63,6 @@ export class EditUserComponent implements OnInit {
   loadUserData() {
     this.userService.getUser(this.userId).subscribe({
       next: (user: User) => {
-        console.log(user);
         this.editUserForm.patchValue({
           id: this.userId,
           userName: user.userName,

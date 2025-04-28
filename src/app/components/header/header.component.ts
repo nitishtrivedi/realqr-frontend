@@ -91,4 +91,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this.auth.logout();
   }
+
+  redirectProfile() {
+    this.router.navigate([`/manage-profile/${this.user?.id}`]);
+  }
 }

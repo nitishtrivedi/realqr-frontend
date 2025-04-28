@@ -223,7 +223,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/add-user']);
   }
 
-  editEnquiry(id: number) {}
+  editEnquiry(id: number) {
+    this.router.navigate([`admin/edit-enquiry/${id}`]);
+  }
 
   deleteEnquiry(id: number) {
     Swal.fire({

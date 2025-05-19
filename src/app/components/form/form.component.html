@@ -1,21 +1,28 @@
 <div class="form-container">
   <mat-card class="intro-card mat-elevation-z4">
     <mat-card-header>
-      <mat-card-title><b>Real QR - Enquiry Form</b></mat-card-title>
+      <mat-card-title data-icon="🔳"><b>Real QR - Enquiry Form</b></mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p class="intro-text">
-        Please fill in the following details carefully to submit your enquiry
-      </p>
+     <p class="instruction-text">
+  <mat-icon color="primary" class="instruction-icon">info</mat-icon>
+   <span class="scrolling-text">
+    Please fill in the following details carefully to submit your enquiry.
+  </span>
+</p>
+
+
     </mat-card-content>
   </mat-card>
 
   <form [formGroup]="enquiryForm" (ngSubmit)="onSubmit()" class="main-form">
     <!-- Personal Information Section -->
     <mat-card class="section-card mat-elevation-z4">
-      <mat-card-header>
-        <mat-card-title>Personal Information</mat-card-title>
-      </mat-card-header>
+      <mat-card-header style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+  <mat-card-title>Personal Information</mat-card-title>
+  <mat-icon style="color: white;">person</mat-icon>
+</mat-card-header>
+
       <mat-divider></mat-divider>
       <mat-card-content>
         <div class="form-grid">
@@ -56,9 +63,10 @@
 
     <!-- Property Information Section -->
     <mat-card class="section-card mat-elevation-z4">
-      <mat-card-header>
-        <mat-card-title>Property Information</mat-card-title>
-      </mat-card-header>
+     <mat-card-header style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+  <mat-card-title>Property Information</mat-card-title>
+  <mat-icon style="color: white;">apartment</mat-icon>
+</mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
         <div class="form-grid">

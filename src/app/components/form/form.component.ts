@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormService } from '../../services/form.service';
 import Swal from 'sweetalert2';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-form',
@@ -23,6 +24,7 @@ import { MatDividerModule } from '@angular/material/divider';
     NgFor,
     ReactiveFormsModule,
     MatDividerModule,
+    MatIconModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css',
